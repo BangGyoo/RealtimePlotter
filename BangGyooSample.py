@@ -20,15 +20,14 @@ import numpy as np
 # Simple example with threading
 
 class _SinePlotter(RealtimePlotter):
-
+    
     def __init__(self):
-
-        RealtimePlotter.__init__(self, [(-1,+1), (-1,+1)], 
-                phaselims=((-1,+1), (-1,+1)),
+        RealtimePlotter.__init__(self, [(-1,+1)], 
+                
                 window_name='Sinewave demo',
-                yticks = [(-1,0,+1),(-1,0,+1)],
-                styles = ['r--', 'b-'], 
-                ylabels=['Sin', 'Cos'])
+                yticks = [(-1,0,+1)],
+                styles = ['r--'], 
+                ylabels=['Sin'])
 
         self.xcurr = 0
 
@@ -41,12 +40,20 @@ class _SinePlotter(RealtimePlotter):
 
     def _getRow(self, row):
 
-        size = len(self.x)
+        #size = len(self.x)
 
-        angle = 2*np.pi*(float(self.xcurr)%size)/size
-        print(np.sin(angle))
+        #angle = 2*np.pi*(float(self.xcurr)%size)/size
         
-        return np.sin(angle) if row == 2 else np.cos(angle)
+        if self.xcurr is 0.5 :
+            self.xcurr = 0
+        elif self.xcurr is 0 :
+            self.xcurr = -0.5
+        else :
+            self.xcurr = 0.5
+
+        print(self.xcurr)
+        
+        return self.xcurr
 
 
 def _update(plotter):
@@ -55,8 +62,8 @@ def _update(plotter):
 
     while True:
 
-        plotter.xcurr += 1
-        sleep(.002)
+        
+        sleep(.0001)
 
 if __name__ == '__main__':
 
