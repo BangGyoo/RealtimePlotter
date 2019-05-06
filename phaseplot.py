@@ -56,7 +56,7 @@ def _update(plotter):
     while True:
 
         plotter.xcurr += 1
-        sleep(.002)
+        sleep(.2)
 
 if __name__ == '__main__':
 

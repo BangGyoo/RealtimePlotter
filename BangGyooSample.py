@@ -22,20 +22,21 @@ import numpy as np
 class _SinePlotter(RealtimePlotter):
     
     def __init__(self):
-        RealtimePlotter.__init__(self, [(-1,+1)], 
-                
-                window_name='Sinewave demo',
-                yticks = [(-1,0,+1)],
-                styles = ['r--'], 
-                ylabels=['Sin'])
-
-        self.xcurr = 0
+        RealtimePlotter.__init__(self, [(-10,+10),(50,100)], 
+                yticks = [(-10,0,+30),(0,50,100)],
+                styles = ['r-','g-'], 
+                ylabels=['Temperature','humidity'])
+        self.timer = 0
+        self.xcurr = 13
+        self.huminity = 60
 
     def getValues(self):
 
         s = self._getRow(1)
         c = self._getRow(2)
-
+	
+        from time import sleep
+        sleep(1)
         return  s,c, s, c
 
     def _getRow(self, row):
@@ -43,27 +44,27 @@ class _SinePlotter(RealtimePlotter):
         #size = len(self.x)
 
         #angle = 2*np.pi*(float(self.xcurr)%size)/size
-        
+        '''
         if self.xcurr is 0.5 :
             self.xcurr = 0
         elif self.xcurr is 0 :
             self.xcurr = -0.5
         else :
             self.xcurr = 0.5
-
-        print(self.xcurr)
-        
-        return self.xcurr
-
+'''
+        return self.xcurr if row is 1 else self.huminity
 
 def _update(plotter):
 
     from time import sleep
+    import random
 
     while True:
-
-        
-        sleep(.0001)
+        if (0 == plotter.timer%10) :
+             plotter.xcurr += random.randint(-1,1)
+        plotter.huminity += random.randint(-1,1)
+        plotter.timer += 5
+        sleep(10)
 
 if __name__ == '__main__':
 
